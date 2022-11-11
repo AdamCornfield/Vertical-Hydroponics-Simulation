@@ -3,7 +3,68 @@
     <link href="./css/halfmoon.min.css" rel="stylesheet">
     <link href="./css/Styles.css" rel="stylesheet">
 </head>
-<body>
-    Test
+<body class="with-custom-webkit-scrollbars with-custom-css-scrollbars dark-mode" data-dm-shortcut-enabled="true" data-set-preferred-theme-onload="true">
+    <div id="page-wrapper" class="page-wrapper">
+        <div id="page-content">
+            <div class="row">
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="card p-5 pb-20">
+                        <h4 class="text-center">Controls</h4>
+                        <div class="line-divider"></div>
+                        <div class="px-20">
+                            <button id="start" class="btn btn-success w-full my-5">Start Sim</button>
+                            <button disabled="disabled" id="pause" class="btn btn-secondary w-full my-5 d-none">Pause Sim</button>
+                            <button disabled="disabled" id="emergency" class="btn btn-danger w-full my-5">Emergency Mode</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-6">
+                    <div class="card p-0">
+                        <div id="statusColour" class="bg-success text-light border rounded-top mb-10 border-bottom">
+                            <h3 class="text-center">Current Operational Status: Normal</h3>
+                        </div>
+                        <div class="py-5 px-15">
+                            <h5>Reserviour Tank</h5>
+                            <div class="progress h-25 mb-20">
+                                <div id="tank1" class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+                            </div>
+                            <div class="line-divider"></div>
+                            <h5>Nutrients Tank</h5>
+                            <div class="progress h-25 mb-20">
+                                <div id="tank2" class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+                            </div>
+                            <div class="line-divider"></div>
+                            <h5>Water Valve Status:</h5>
+                            <p id="valveState" class="text-secondary">Stand By</p>
+                            <div class="line-divider"></div>
+                            <h5>Water Pump Status:</h5>
+                            <p id="pumpState" class="text-secondary">Stand By</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="card p-5 pb-20 text-center">
+                        <h4 class="text-center">Statistics</h4>
+                        <div class="line-divider-full mb-0"></div>
+
+                        <p>Time Since Reserviour Tank Refil:</p>
+                        <p id="timeSinceRefilT1"></p>
+
+                        <div class="line-divider"></div>
+
+                        <p>Time Since Nutrients Tank Refil:</p>
+                        <p id="timeSinceRefilT2"></p>
+
+                        <div class="line-divider"></div>
+                    </div>
+                    <div class="card">
+                        <a href="https://github.cornfield.dev">Created By Adam Cornfield</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="./js/App.js"></script>
+    <script src="./js/halfmoon.min.js"></script>
 </body>

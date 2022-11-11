@@ -4,7 +4,7 @@ var clock = 0
 var opMode = "Offline"
 var waterValveStatus = true
 var waterPumpStatus = true
-var simRate = 1000
+var simRate = 1
 var leak = false
 var timeOfLastEmergency = 0
 

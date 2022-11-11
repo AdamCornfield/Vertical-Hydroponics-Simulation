@@ -101,6 +101,8 @@ function checkForLeaks () {
         document.getElementById("stopLeak").setAttribute("disabled", "disabled")
         
         taskList = []
+
+        buzzer20sec()
         
         setTask(600, "Emergency: Water Reservoir Empty", () => {
             timeOfLastEmergency = clock
@@ -379,6 +381,7 @@ document.getElementById("emergency").addEventListener('click', (e) => {
         taskList[i][0] = taskList[i][0] + 240
     }
 
+    buzzer1sec()
     
     setTask(240, "Emergency Button", () => {
         document.getElementById("operationStatusBar").textContent = "Current Operational Status: Normal"
@@ -434,3 +437,31 @@ document.getElementById("stopLeak").addEventListener('click', (e) => {
     document.getElementById("startLeak").classList.remove("d-none")
     document.getElementById("stopLeak").classList.add("d-none")
 })
+
+async function buzzer1sec () {
+    if (opMode == "Emergency: Manual Stop" || opMode == "Emergency: Water Reservoir Empty") {
+        document.getElementById("buzzerIcon").classList.remove("d-none")
+
+        setTask(1, "Buzzer", () => {
+            document.getElementById("buzzerIcon").classList.add("d-none")
+
+            setTask(1, "Buzzer", (time) => {
+                buzzer1sec()
+            })
+        })
+    }
+}
+
+async function buzzer20sec () {
+    if (opMode == "Emergency: Manual Stop" || opMode == "Emergency: Water Reservoir Empty") {
+        document.getElementById("buzzerIcon").classList.remove("d-none")
+
+        setTask(20, "Buzzer", () => {
+            document.getElementById("buzzerIcon").classList.add("d-none")
+
+            setTask(20, "Buzzer", (time) => {
+                buzzer20sec()
+            })
+        })
+    }
+}

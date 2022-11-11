@@ -13,15 +13,16 @@
                         <div class="line-divider"></div>
                         <div class="px-20">
                             <button id="start" class="btn btn-success w-full my-5">Start Sim</button>
-                            <button disabled="disabled" id="pause" class="btn btn-secondary w-full my-5 d-none">Pause Sim</button>
-                            <button id="emergency" class="btn btn-danger w-full my-5">Emergency Mode</button>
+                            <button id="pause" class="btn btn-secondary w-full my-5 d-none">Pause Sim</button>
+                            <button id="play" class="btn btn-success w-full my-5 d-none">Resume Sim</button>
+                            <button disabled="disabled" id="emergency" class="btn btn-danger w-full my-5">Emergency Mode</button>
                         </div>
                     </div>
                 </div>
                 <div class="col-12 col-md-6 col-lg-6">
                     <div class="card p-0">
-                        <div id="statusColour" class="bg-success text-light border rounded-top mb-10 border-bottom">
-                            <h3 class="text-center">Current Operational Status: Normal</h3>
+                        <div id="statusColour" class="bg-danger text-light border rounded-top mb-10 border-bottom">
+                            <h3 id="operationStatusBar" class="text-center">Current Operational Status: Offline</h3>
                         </div>
                         <div class="py-5 px-15">
                             <h5>Reserviour Tank</h5>

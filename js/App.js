@@ -51,17 +51,19 @@ setLevel(100, "tank2")
 ///////////////
 async function updateTank1 () {
     setInterval(() => {
-        var value = (1 - (T1 / 43200)) * 100
-
-        timeSinceRefilT1.textContent = Math.round((T1 / 3600) * 100) / 100 + " Hours"
-
-        setLevel(value, "tank1")
+        if (opMode == "Normal") {
+            var value = (1 - (T1 / 43200)) * 100
+    
+            timeSinceRefilT1.textContent = Math.round((T1 / 3600) * 100) / 100 + " Hours"
+    
+            setLevel(value, "tank1")
+        }
     }, simRate);
 }
 
 async function updateTank2 () {
     setInterval(() => {
-        if (T2 != baseT2) {
+        if (opMode == "Normal") {
             var value = (1 - (T2 / 129600)) * 100
     
             timeSinceRefilT2.textContent = Math.round((T2 / 3600) * 100) / 100 + " Hours"
@@ -73,7 +75,7 @@ async function updateTank2 () {
 
 async function fillTank1 () {
     setInterval(() => {
-        if (waterValveStatus == true) {
+        if (waterValveStatus == true && opMode == "Normal") {
             T1 = T1 - 2
             valveState.textContent = "Operating"
 
@@ -90,7 +92,7 @@ async function fillTank1 () {
 
 async function fillTank2 () {
     setInterval(() => {
-        if (waterPumpStatus == true) {
+        if (waterPumpStatus == true && opMode == "Normal") {
             T2 = T2 - 2
             pumpState.textContent = "Operating"
 
@@ -107,7 +109,7 @@ async function fillTank2 () {
 
 async function drainTank1 () {
     setInterval(() => {
-        if (T1 < baseT1 && waterValveStatus == false) {
+        if (T1 < baseT1 && waterValveStatus == false && opMode == "Normal") {
             T1++
         }
     }, simRate);
@@ -115,7 +117,7 @@ async function drainTank1 () {
 
 async function drainTank2 () {
     setInterval(() => {
-        if (T2 < baseT2 && waterPumpStatus == false) {
+        if (T2 < baseT2 && waterPumpStatus == false && opMode == "Normal") {
             T2++
         }
     }, simRate);
@@ -158,6 +160,13 @@ function launch() {
     drainTank2()
     manageTank1()
     manageTank2()
+
+    document.getElementById("emergency").removeAttribute("disabled")
+
+    document.getElementById("operationStatusBar").textContent = "Current Operational Status: Normal"
+    document.getElementById("statusColour").classList.add("bg-success")
+    document.getElementById("statusColour").classList.remove("bg-danger")
+    document.getElementById("statusColour").classList.remove("bg-secondary")
 }
 
 document.getElementById("start").addEventListener('click', (e) => {
@@ -169,5 +178,51 @@ document.getElementById("start").addEventListener('click', (e) => {
 
 document.getElementById("emergency").addEventListener('click', (e) => {
     //Emergency: Manual Stop
-    
+    document.getElementById("operationStatusBar").textContent = "Current Operational Status: Emergency: Manual stop"
+    document.getElementById("statusColour").classList.add("bg-danger")
+    document.getElementById("statusColour").classList.remove("bg-success")
+    document.getElementById("statusColour").classList.remove("bg-secondary")
+
+    document.getElementById("pause").setAttribute("disabled", "disabled")
+
+    opMode = "Emergency: Manual stop"
+
+    waterPumpStatus = false
+    waterValveStatus = false
+    setTimeout(() => {
+        document.getElementById("operationStatusBar").textContent = "Current Operational Status: Normal"
+        document.getElementById("statusColour").classList.add("bg-success")
+        document.getElementById("statusColour").classList.remove("bg-danger")
+        document.getElementById("statusColour").classList.remove("bg-secondary")
+
+        document.getElementById("pause").removeAttribute("disabled")
+
+        opMode = "Normal"
+    }, 240);
+})
+
+document.getElementById("pause").addEventListener('click', (e) => {
+    opMode = "Pause"
+    document.getElementById("pause").classList.add("d-none")
+    document.getElementById("play").classList.remove("d-none")
+
+    document.getElementById("emergency").setAttribute("disabled", "disabled")
+
+    document.getElementById("operationStatusBar").textContent = "Current Operational Status: Paused"
+    document.getElementById("statusColour").classList.add("bg-secondary")
+    document.getElementById("statusColour").classList.remove("bg-success")
+    document.getElementById("statusColour").classList.remove("bg-danger")
+})
+
+document.getElementById("play").addEventListener('click', (e) => {
+    opMode = "Normal"
+    document.getElementById("play").classList.add("d-none")
+    document.getElementById("pause").classList.remove("d-none")
+
+    document.getElementById("emergency").removeAttribute("disabled")
+
+    document.getElementById("operationStatusBar").textContent = "Current Operational Status: Normal"
+    document.getElementById("statusColour").classList.add("bg-success")
+    document.getElementById("statusColour").classList.remove("bg-danger")
+    document.getElementById("statusColour").classList.remove("bg-secondary")
 })
